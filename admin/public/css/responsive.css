@@ -1,0 +1,49 @@
+@media(max-width: 496px) {
+    /* Chung page */
+    .header_content {
+        padding: 12px;
+        display: block;
+    }
+    .header__content_title {
+        margin-bottom: 12px;
+    }
+    .header__content_title h3 {
+        font-size: 24px;
+        text-transform: uppercase;
+    }
+    .header__content_title i {
+        font-size: 25px;
+    }
+    /* Admin page */
+    .widget-right {
+        height: 80px;
+        padding: 16px;
+        display: block;
+        line-height: 1.6rem;
+        margin: 0;
+        text-align: center;
+        background: white;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        color: #999;
+    }
+    /* Setting page */
+    .change_images {
+        text-align: center;
+    }
+    .change__title {
+        font-size: 18px;
+        color: #2f699b;
+        text-transform: uppercase;
+        margin: 0;
+        width: 100%;
+        line-height: 25px;
+        text-align: center;
+        padding: 10px 0px;
+        border-bottom: 1px solid #f70d28;
+        margin-bottom: -1px;
+    }
+    .change_logo_button {
+        display: inline-block;
+    }
+}
