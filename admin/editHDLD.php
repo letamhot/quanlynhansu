@@ -22,11 +22,42 @@ include dirname(__FILE__)."/layout/sidebar.php";
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
+    <?php 
 
+        include('../connection/connection.php');
+        $errors = [];
+        $success = [];
+        if(isset($_POST['btnAddHDLDNV']))
+        {
+            $id = $_POST['id'];
+            $tenNV = $_POST['tenNV'];
+            $tenHDLD = $_POST['tenHDLD'];
+            $loaiHDLD = $_POST['loaiHDLD'];
+            $ngayHDLD = $_POST['ngayHDLD'];
+            $daiDienCongTy_ky = $_POST['daiDienCongTy_ky'];
+            $daiDienNLD_ky = $_POST['daiDienNLD_ky'];
+            $noiDung = $_POST['noiDung'];
+            if($tenNV == "" || $tenHDLD== "" || $loaiHDLD== "" || $ngayHDLD== "" || $daiDienCongTy_ky== ""|| $daiDienNLD_ky== ""|| $noiDung== "")
+            {
+                $errors['Error!!!'] = "Vui lòng nhập đầy đủ thông tin.";
+            }
+            else{
+                $sql = "UPDATE hopdonglaodong SET idNhanVien = '".$tenNV."',tenHDLD = '".$tenHDLD."',
+                loaiHDLD = '".$loaiHDLD."',ngayHDLD = '".$ngayHDLD."',daiDienCongTy_ky = '".$daiDienCongTy_ky."',
+                daiDienNLD_ky = '".$daiDienNLD_ky."',noiDung = '".$noiDung."' WHERE id= '".$id."' ";
+                $success['Success:)) '] = "Sửa hợp đồng lao động thành công.!";
+
+                mysqli_query($conn, $sql);
+            }
+           
+        }
+        //Ngắt kết nối dữ liệu với db
+        include('../connection/closedatabase.php');
+    ?>
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-      <form action="controller/updateHDLD.php" method="post" enctype="multipart/form-data">
+      <form action="" method="post" enctype="multipart/form-data">
             <div class="profile_edit">
                 <div class="row">
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
@@ -38,7 +69,7 @@ include dirname(__FILE__)."/layout/sidebar.php";
                                 <button type="submit" name="btnAddHDLDNV" class="btn btn-primary">
                                     <i class="mdi mdi-content-save menu-icon"></i>Lưu
                                 </button>
-                                <a href="indexNhanVien.php" rel="noopener noreferrer" class="btn btn-danger">
+                                <a href="indexHDLD.php" rel="noopener noreferrer" class="btn btn-danger">
                                     <i class="mdi mdi-close menu-icon"></i>Thoát
                                 </a>
                             </div>
@@ -46,6 +77,23 @@ include dirname(__FILE__)."/layout/sidebar.php";
                     </div>
                 </div>
                 <div class="bg-light">
+                <?php if($errors) : ?>
+                        <div class="alert alert-warning fade show mt-3" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <?php foreach ($errors as $key => $er) : ?>
+                                <strong><?php echo $key; ?></strong><?php echo $er; ?>
+                            <?php endforeach; ?>   
+                        </div>
+                    <?php endif; ?>
+                    <!-- Thông báo thành công  -->
+                    <?php if($success) : ?>
+                        <div class="alert alert-primary fade show mt-3" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <?php foreach ($success as $key => $su) : ?>
+                                <strong><?php echo $key; ?></strong><?php echo $su; ?>
+                            <?php endforeach; ?>   
+                        </div>  
+                    <?php endif; ?>
                     <div class="row">
                     <?php 
                             include('../connection/connection.php');
@@ -62,17 +110,15 @@ include dirname(__FILE__)."/layout/sidebar.php";
                                 <select name="tenNV" class="form-control" id="exampleFormControlSelect2">
                                   <?php 
                                       include('../connection/connection.php');
-                                      $sql_danhmuc = "SELECT * FROM nhanvien ORDER BY nhanvien.id ASC";
-                                      $result_danhmuc = mysqli_query($conn, $sql_danhmuc);
-                                          while($row_danhmuc = mysqli_fetch_assoc($result_danhmuc))
+                                      $sql_nv = "SELECT * FROM nhanvien where id = '".$value["idNhanVien"]."'";
+                                      $result_nv = mysqli_query($conn, $sql_nv);
+                                          while($row_nv = mysqli_fetch_assoc($result_nv))
                                           {
-                                            if($value['idNhanVien'] = $row_danhmuc['id']){
-                                              echo '<option value='.$row_danhmuc['id'].' selected>'.$row_danhmuc['tenNV'].'</option>';
-
-                                            } else{
-                                              echo '<option value='.$row_danhmuc['id'].'>'.$row_danhmuc['tenNV'].'</option>';
+                                            if($row_nv['tenNV']!='Administrator'){
+                                                echo '<option value='.$row_nv['id'].' selected>'.$row_nv['tenNV'].'</option>';
 
                                             }
+
                                           }
                                   ?>
                                 </select>
@@ -113,7 +159,7 @@ include dirname(__FILE__)."/layout/sidebar.php";
                         <div class="col-12 col-sm-12 col-md-12 col-lg-6">
                             <div class="form-group">
                                 <label for="#">Đại diện người lao động ký</label>
-                                <input type="text" name="daiDienNLD_ky" value="<?php echo $value['daiDienNLD_ky'];?>" class="form-control" disabled>
+                                <input type="text" name="daiDienNLD_ky" value="<?php echo $value['daiDienNLD_ky'];?>" class="form-control">
                             </div>
                             
                         </div>

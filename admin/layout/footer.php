@@ -1,9 +1,9 @@
 <!-- /.content-wrapper -->
 <footer class="main-footer">
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
-    All rights reserved.
+    <strong>Copyright &copy; 2023-2024 <a href="<?php $url ?>index.php">Hệ thống Quảng lý nhân sự VNPT Quảng Bình</a>.</strong>
+    Tập đoàn VNPT Việt Nam.
     <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 3.2.0
+      <b>Version</b> 1.0.0
     </div>
   </footer>
 
@@ -23,7 +23,17 @@
 <script>
   $.widget.bridge('uibutton', $.ui.button)
 </script>
+<script>
+      $(document).ready(function(){
+        $('.nav-item').on('click',function(){
+            //Remove any previous active classes
+        $('li.nav-item .nav-link').removeClass('active');
 
+        //Add active class to the clicked item
+        $(this).addClass('active');
+        });
+      });
+</script>
 <!-- Bootstrap 4 -->
 <script src="<?php $url ?>public/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- ChartJS -->

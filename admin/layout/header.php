@@ -21,7 +21,11 @@ $url = dirname(__FILE__);
       while($row = mysqli_fetch_assoc($result1))
       {
         $email=$row['email'];
+        $id=$row['id'];
+        $anh=$row['avatar'];
+        $tenNV=$row['tenNV'];
         $role=$row['idRole'];
+        $donvi=$row['donvi'];
         if ($role == 1)
         {
           $quyen='Toàn quyền';
@@ -41,7 +45,8 @@ $url = dirname(__FILE__);
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Dashboard</title>
+  <title>Quản lý nhân sự | Quản trị hệ thống</title>
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -66,13 +71,13 @@ $url = dirname(__FILE__);
   <link rel="stylesheet" href="<?php $url ?>public/vendors/mdi/css/materialdesignicons.min.css">
 	<link rel="stylesheet" href="<?php $url ?>public/vendors/base/vendor.bundle.base.css">
 	<link rel="stylesheet" href="<?php $url ?>public/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
-	<link rel="stylesheet" href="<?php $url ?>public/css/style.css">
-	<link rel="stylesheet" href="<?php $url ?>public/css/theme.css">
+	<!-- <link rel="stylesheet" href="<?php $url ?>public/css/style.css">
+	<link rel="stylesheet" href="<?php $url ?>public/css/theme.css"> -->
 	<link rel="stylesheet" href="<?php $url ?>public/css/responsive.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha256-aAr2Zpq8MZ+YA/D6JtRD3xtrwpEz2IqOS+pWD/7XKIw=" crossorigin="anonymous" />
    
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />\
-    
+
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
     

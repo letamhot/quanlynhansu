@@ -12,7 +12,7 @@ include dirname(__FILE__)."/layout/sidebar.php";
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Sửa thông tin Nhân viên</h1>
+            <h1 class="m-0">Nhân viên</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -24,11 +24,99 @@ include dirname(__FILE__)."/layout/sidebar.php";
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
+    <?php 
 
+        include('../connection/connection.php');
+        $errors = [];
+        $success = [];
+        if(isset($_POST['btnUpdateNhanVien']))
+        {
+            $id = $_POST['id'];
+            $maNV = $_POST['maNV'];
+            $tenNV = $_POST['tenNV'];
+            $soDienThoai = $_POST['soDienThoai'];
+            $email = $_POST['email'];
+            $ngaySinh = $_POST['ngaySinh'];
+            $cmnd = $_POST['cmnd'];
+            $ngayCap = $_POST['ngayCap'];
+            $noiCap = $_POST['noiCap'];
+            $gioiTinh = $_POST['gioiTinh'];
+            $diaChi = $_POST['diaChi'];
+            $trinhDoHocVan = $_POST['trinhDoHocVan'];
+            $tinhTrangHonNhan = $_POST['tinhTrangHonNhan'];
+            $ngayVaoLam  = $_POST['ngayVaoLam'];
+            $soQuyetDinh  = $_POST['soQuyetDinh'];
+            $trangThaiLamViec  = $_POST['trangThaiLamViec'];
+            $luong  = $_POST['luong'];
+            $congDoan  = $_POST['congDoan'];
+            $donVi  = $_POST['donVi'];
+            // $donVis = implode(",", $donVi);
+            $chucVu  = $_POST['chucVu'];
+            // $chucVus  = implode(",", $chucVu);
+
+            $sql = "SELECT * FROM nhanvien";
+                                                
+            // Thực thi câu truy vấn và gán vào $result
+            $result = mysqli_query($conn, $sql);
+            $value = mysqli_fetch_array($result,MYSQLI_ASSOC);
+
+            if(isset($_FILES['avatar'])) 
+            {
+                $file_name = $_FILES['avatar'] ['name'];
+                $file_size = $_FILES['avatar'] ['name'];
+                $file_tmp = $_FILES['avatar'] ['tmp_name'];
+                $file_type = $_FILES['avatar'] ['type'];
+
+                $arr = explode('.', $file_name);
+                $file_ext = strtolower(end($arr));
+                $expensions = array("jpeg", "jpg", "png","mp4","webp","");
+
+                if(in_array($file_ext, $expensions) === false)
+                {
+
+                    $errors['Error!!!']= "Chỉ cho upload file ở dạng JPG, PNG và JPEG";
+                }
+                if($file_size > 372244480) 
+                {
+                    $errors['Error!!!'] = "Chỉ cho phép upload file dưới 2MB";
+                }
+                if (empty($errors) == true) 
+                {
+                    move_uploaded_file($file_tmp,"../images/imageNV/".$file_name);
+                    if($file_name != null || $file_name != ""){
+                    $sql = "UPDATE nhanvien SET avatar ='".$file_name."', maNV ='".$maNV."', tenNV='".$tenNV."', 
+                    soDienThoai='".$soDienThoai."', diaChi='".$diaChi."', email='".$email."',
+                    ngaySinh='".$ngaySinh."', CMND ='".$cmnd."', ngayCap ='".$ngayCap."', noiCap ='".$noiCap."', 
+                    gioiTinh='".$gioiTinh."', trinhDoHocVan= '".$trinhDoHocVan."', tinhTrangHonNhan='".$tinhTrangHonNhan."', 
+                    trangThai='".$trangThaiLamViec."', ngayVaoLam='".$ngayVaoLam."', luong ='".$luong."', 
+                    congDoan='".$congDoan."', donvi='".$donVi."', chucvu='".$chucVu."', soQuyetDinh='".$soQuyetDinh."'
+                    WHERE id= '".$id."'";
+                    
+                    }else{
+                        $sql = "UPDATE nhanvien SET maNV ='".$maNV."', tenNV='".$tenNV."', 
+                        soDienThoai='".$soDienThoai."', diaChi='".$diaChi."', email='".$email."',
+                        ngaySinh='".$ngaySinh."', CMND ='".$cmnd."', ngayCap ='".$ngayCap."', noiCap ='".$noiCap."', 
+                        gioiTinh='".$gioiTinh."', trinhDoHocVan= '".$trinhDoHocVan."', tinhTrangHonNhan='".$tinhTrangHonNhan."', 
+                        trangThai='".$trangThaiLamViec."', ngayVaoLam='".$ngayVaoLam."', luong ='".$luong."', 
+                        congDoan='".$congDoan."', donvi='".$donVi."', chucvu='".$chucVu."', soQuyetDinh='".$soQuyetDinh."'
+                        WHERE id= '".$id."'";
+                    }
+                    mysqli_query($conn, $sql);
+                    $success['Success :)) '] = "Sửa nhân viên thành công.!";
+                }
+                else 
+                {
+                    $errors['Error!!!'] ='Sửa nhân viên không thành công';
+                }
+            }
+        }
+        //Ngắt kết nối dữ liệu với db
+        include('../connection/closedatabase.php');
+        ?>
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-      <form action="controller/updateNhanVien.php" method="post" enctype="multipart/form-data">
+      <form action="" method="post" enctype="multipart/form-data">
             <div class="profile_edit">
                 <div class="row">
                     <div class="col-12 col-sm-12 col-sm-6">
@@ -36,18 +124,28 @@ include dirname(__FILE__)."/layout/sidebar.php";
                             <div class="header__content_title">
                                 <h3><i class="mdi mdi-plus-circle-outline menu-icon"></i>Sửa thông tin Nhân viên</h3>
                             </div>
-                            <div class="header__buttom_edit">
-                                <button type="submit" name="btnUpdateNhanVien" class="btn btn-primary">
-                                    <i class="mdi mdi-content-save menu-icon"></i>Lưu
-                                </button>
-                                <a href="indexNhanVien.php" rel="noopener noreferrer" class="btn btn-danger">
-                                    <i class="mdi mdi-close menu-icon"></i>Thoát
-                                </a>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
                 <div class="bg-light">
+                <?php if($errors) : ?>
+                    <div class="alert alert-warning fade show mt-3" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <?php foreach ($errors as $key => $er) : ?>
+                            <strong><?php echo $key; ?></strong><?php echo $er; ?>
+                        <?php endforeach; ?>   
+                    </div>
+                <?php endif; ?>
+                <!-- Thông báo thành công  -->
+                <?php if($success) : ?>
+                    <div class="alert alert-primary fade show mt-3" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <?php foreach ($success as $key => $su) : ?>
+                            <strong><?php echo $key; ?></strong><?php echo $su; ?>
+                        <?php endforeach; ?>   
+                    </div>  
+                <?php endif; ?>
                     <div class="row">
                     <?php 
                             include('../connection/connection.php');
@@ -57,16 +155,10 @@ include dirname(__FILE__)."/layout/sidebar.php";
                         ?>
                     <div class="col-sm-12">
                             <div class="form-group">
-                            <input type="hidden" name="id" value="<?php echo $value['id']; ?>">
-
-                                <input type="file" name="avatar" id="image" class="file-upload-default">
-                                
-                                
+                            <input type="hidden" name="id" value="<?php echo $value['id']; ?>">                           
                                 <div class="input-group col-xs-6">
                                     <img id="hinhanh_post" src="../admin/images/imageNV/<?php echo $value['avatar'];?>" alt="" srcset="" width="100px" height="100px">
-                                    <input type="text" value="<?php echo $value['avatar'];?>" class="form-control file-upload-info" disabled placeholder="Upload Image">
-                                    <button class="file-upload-browse btn btn-primary btn-sm" type="button">Chọn ảnh</button>
-
+                                    <input type="file" name="avatar" value="<?php echo $value['avatar'];?>" id="image" class="file-upload-default form-control file-upload-info" placeholder="Upload Image">
                                 </div>
                                 <label for="#">Ảnh đại diện</label>
                             </div>
@@ -157,7 +249,7 @@ include dirname(__FILE__)."/layout/sidebar.php";
                                 <select name="donVi" class="form-control" data-rel="chosen">
                                   <?php 
                                       include('../connection/connection.php');
-                                      $sql_danhmuc = "SELECT * FROM donvi ORDER BY donvi.id ASC";
+                                      $sql_danhmuc = "SELECT * FROM donvi where id= $donvi ORDER BY donvi.id ASC";
                                       $result_danhmuc = mysqli_query($conn, $sql_danhmuc);
                                           while($row_danhmuc = mysqli_fetch_assoc($result_danhmuc))
                                           {   
@@ -255,6 +347,14 @@ include dirname(__FILE__)."/layout/sidebar.php";
                             </div>
                             
                         </div>
+                        <div class="header__buttom_edit">
+                                <button type="submit" name="btnUpdateNhanVien" class="btn btn-primary">
+                                    <i class="mdi mdi-content-save menu-icon"></i>Lưu
+                                </button>
+                                <a href="indexNhanVien.php" rel="noopener noreferrer" class="btn btn-danger">
+                                    <i class="mdi mdi-close menu-icon"></i>Thoát
+                                </a>
+                            </div>
                     </div>
                 </div>
             </div>

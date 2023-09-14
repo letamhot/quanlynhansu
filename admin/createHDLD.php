@@ -22,11 +22,40 @@ include dirname(__FILE__)."/layout/sidebar.php";
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
+    <?php 
 
+        include('../connection/connection.php');
+        $errors = [];
+        $success = [];
+        if(isset($_POST['btnAddHDLDNV']))
+        {
+            $tenNV = $_POST['tenNV'];
+            $tenHDLD = $_POST['tenHDLD'];
+            $loaiHDLD = $_POST['loaiHDLD'];
+            $soQuyetDinh = "";
+            $ngayHDLD = $_POST['ngayHDLD'];
+            $daiDienCongTy_ky = $_POST['daiDienCongTy_ky'];
+            $daiDienNLD_ky = $_POST['daiDienNLD_ky'];
+            $noiDung = $_POST['noiDung'];
+            if($tenNV == "" || $tenHDLD== "" || $loaiHDLD== "" || $ngayHDLD== "" || $daiDienCongTy_ky== ""|| $daiDienNLD_ky== ""|| $noiDung== "")
+            {
+                $errors['Error!!!'] = "Vui lòng nhập đầy đủ thông tin.";
+            }
+            else{
+                $sql = "INSERT INTO hopdonglaodong(tenHDLD,idNhanVien,loaiHDLD,ngayHDLD,daiDienCongTy_ky,daiDienNLD_ky,noiDung)
+                VALUE ('".$tenHDLD."','".$tenNV."','".$loaiHDLD."','".$ngayHDLD."','".$daiDienCongTy_ky."','".$daiDienNLD_ky."','".$noiDung."') ";
+                $success['Success:)) '] = "Thêm hợp đồng lao động thành công.!";
+
+                mysqli_query($conn, $sql);
+            }
+        }
+        //Ngắt kết nối dữ liệu với db
+        include('../connection/closedatabase.php');
+    ?>
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-      <form action="controller/addHDLD.php" method="post" enctype="multipart/form-data">
+      <form action="" method="post" enctype="multipart/form-data">
             <div class="profile_edit">
                 <div class="row">
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
@@ -46,6 +75,23 @@ include dirname(__FILE__)."/layout/sidebar.php";
                     </div>
                 </div>
                 <div class="bg-light">
+                    <?php if($errors) : ?>
+                        <div class="alert alert-warning fade show mt-3" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <?php foreach ($errors as $key => $er) : ?>
+                                <strong><?php echo $key; ?></strong><?php echo $er; ?>
+                            <?php endforeach; ?>   
+                        </div>
+                    <?php endif; ?>
+                    <!-- Thông báo thành công  -->
+                    <?php if($success) : ?>
+                        <div class="alert alert-primary fade show mt-3" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <?php foreach ($success as $key => $su) : ?>
+                                <strong><?php echo $key; ?></strong><?php echo $su; ?>
+                            <?php endforeach; ?>   
+                        </div>  
+                    <?php endif; ?>
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-6">
                             <div class="form-group">
@@ -53,12 +99,15 @@ include dirname(__FILE__)."/layout/sidebar.php";
                                 <select name="tenNV" class="form-control" id="exampleFormControlSelect2">
                                   <?php 
                                       include('../connection/connection.php');
-                                      $sql_danhmuc = "SELECT * FROM nhanvien ORDER BY nhanvien.id ASC";
+                                      $sql_danhmuc = "SELECT * FROM nhanvien where donvi = $donvi ORDER BY nhanvien.id ASC";
                                       $result_danhmuc = mysqli_query($conn, $sql_danhmuc);
-                                          while($row_danhmuc = mysqli_fetch_assoc($result_danhmuc))
-                                          {   
-                                            echo '<option value='.$row_danhmuc['id'].'>'.$row_danhmuc['tenNV'].'</option>';
-                                          }
+                                        while($row_danhmuc = mysqli_fetch_assoc($result_danhmuc))
+                                        {   
+                                            if($row_danhmuc['tenNV']!='Administrator'){
+                                                echo '<option value='.$row_danhmuc['id'].'>'.$row_danhmuc['tenNV'].'</option>';
+
+                                            }
+                                        }
                                   ?>
                                 </select>
                                 

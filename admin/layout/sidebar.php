@@ -2,9 +2,9 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="" class="brand-link">
+    <a href="index.php" class="brand-link">
       <img src="<?php $url ?>public/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">AdminLTE 3</span>
+      <span class="brand-text font-weight-light">Quản trị hệ thống</span>
     </a>
 
     <!-- Sidebar -->
@@ -12,13 +12,29 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="<?php $url ?>public/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          <?php if($id){
+            if($anh){
+              echo '<img src="../admin/images/imageNV/'.$anh.'" class="img-circle elevation-2" alt="User Image">';
+
+            }
+            else{
+              echo '<img src="../admin/images/imageNV/logo.jpg" class="img-circle elevation-2" alt="User Image">';
+
+            }
+          }
+          else{
+            echo '<img src="../admin/images/imageNV/logo.jpg" class="img-circle elevation-2" alt="User Image">';
+          }
+          ?>
+          
         </div>
-        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-							<!-- <img src='../images/faces/<?php echo $anh; ?>' alt="profile"/> -->
-							<span class="nav-profile-name"><?php echo $email; ?></span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+        <div class="user" style="margin-top: 10px; margin-left: 10px;">
+            <a href="profile.php">
+                <span style="color: #fff;"><?php echo $email; ?></span>
+            </a>
+        </div>
+       
+        <!-- <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
           <a class="dropdown-item" href="indexProfile.php">
             <i class="mdi mdi-settings text-primary"></i>
             Cài đặt
@@ -27,7 +43,7 @@
             <i class="mdi mdi-logout text-primary"></i>
             Đăng xuất
           </a>
-        </div>
+        </div> -->
 
       </div>
 
@@ -97,12 +113,20 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
+            <a href="" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
-                Widgets
-                <span class="right badge badge-danger">New</span>
+                Chức năng hệ thống
+                <!-- <span class="right badge badge-danger">New</span> -->
               </p>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="indexBangChamCong.php" class="nav-link active">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Bảng chấm công</p>
+                  </a>
+                </li>
+              </ul>
             </a>
           </li>
         </ul>

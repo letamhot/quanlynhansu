@@ -61,7 +61,7 @@ include dirname(__FILE__)."/layout/sidebar.php";
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-6">
                             <div class="form-group">
-                                <label for="#">Lương cơ bản</label>
+                                <label for="#">Lương cơ bản (VND)</label>
                                 <input type="text" name="luongCoBan" class="form-control">
                             </div>
                             
@@ -71,7 +71,7 @@ include dirname(__FILE__)."/layout/sidebar.php";
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-6">
                             <div class="form-group">
-                                <label for="#">Phụ cấp</label>
+                                <label for="#">Phụ cấp (VND)</label>
                                 <input type="text" name="phuCap" class="form-control">
                             </div>
                             

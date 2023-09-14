@@ -19,10 +19,8 @@
         }
         else
         {
-            $sql_login = "SELECT a.email, b.pass, b.email FROM nhanvien as a 
-            JOIN role as b on a.idRole = b.id  
-            JOIN user as c on c.roleId = b.id  
-            WHERE a.email = '".$email."' OR b.email = '".$email."' AND a.pass = MD5('".$password."')";
+            $sql_login = "SELECT a.email, a.pass FROM nhanvien as a
+            WHERE a.email = '".$email."' AND a.pass = MD5('".$password."')";
             $result = mysqli_query($conn, $sql_login);
             if($result != null){
               if(mysqli_num_rows($result)>0)

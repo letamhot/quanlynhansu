@@ -24,11 +24,34 @@ include dirname(__FILE__)."/layout/sidebar.php";
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
+    <?php 
 
+        include('../connection/connection.php');
+        $errors = [];
+        $success = [];
+        if(isset($_POST['btnLuuChucVu']))
+        {
+            $id = $_POST['id'];
+            $tenChucVu = $_POST['tenChucVu'];
+            if($tenChucVu == ""){
+              $errors['Error!!! '] = "Vui lòng nhập đầy đủ thông tin.";
+
+            }
+            else{
+              $sql = "UPDATE chucvu SET tenChucVu = '".$tenChucVu."' WHERE id= '".$id."' ";
+              mysqli_query($conn, $sql);
+              $success['Success:)) '] = "Sửa chức vụ thành công.!";
+            }
+
+
+        }
+        //Ngắt kết nối dữ liệu với db
+        include('../connection/closedatabase.php');
+    ?>
     <!-- Main content -->
     <section class="content">
     <div class="container-fluid">
-      <form action="controller/updateChucVu.php" method="post" enctype="multipart/form-data">
+      <form action="" method="post" enctype="multipart/form-data">
             <div class="profile_edit">
                 <div class="row">
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
@@ -48,6 +71,23 @@ include dirname(__FILE__)."/layout/sidebar.php";
                     </div>
                 </div>
                 <div class="bg-light">
+                    <?php if($errors) : ?>
+                        <div class="alert alert-warning fade show mt-3" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <?php foreach ($errors as $key => $er) : ?>
+                                <strong><?php echo $key; ?></strong><?php echo $er; ?>
+                            <?php endforeach; ?>   
+                        </div>
+                    <?php endif; ?>
+                    <!-- Thông báo thành công  -->
+                    <?php if($success) : ?>
+                        <div class="alert alert-primary fade show mt-3" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <?php foreach ($success as $key => $su) : ?>
+                                <strong><?php echo $key; ?></strong><?php echo $su; ?>
+                            <?php endforeach; ?>   
+                        </div>  
+                    <?php endif; ?>
                     <div class="row">
                     <?php 
                             include('../connection/connection.php');

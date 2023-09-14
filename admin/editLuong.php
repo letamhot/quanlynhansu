@@ -62,11 +62,11 @@ include dirname(__FILE__)."/layout/sidebar.php";
                                 <input type="text" name="heSoLuong" value="<?php echo $value['heSoLuong']; ?>" class="form-control">
                             </div>
                             <div class="form-group">
-                                <label for="#">Lương cơ bản</label>
+                                <label for="#">Lương cơ bản (VND)</label>
                                 <input type="text" name="luongCoBan" value="<?php echo $value['luongCoBan']; ?>" class="form-control">
                             </div>
                             <div class="form-group">
-                                <label for="#">Phụ cấp</label>
+                                <label for="#">Phụ cấp (VND)</label>
                                 <input type="text" name="phuCap" value="<?php echo $value['phuCap']; ?>" class="form-control">
                             </div>
 
